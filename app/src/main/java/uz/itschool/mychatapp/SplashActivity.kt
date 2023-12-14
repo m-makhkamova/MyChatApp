@@ -1,4 +1,4 @@
-package uz.itschool.chatapp
+package uz.itschool.mychatapp
 
 import android.content.Intent
 import android.os.Bundle

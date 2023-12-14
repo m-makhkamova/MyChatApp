@@ -33,8 +33,12 @@ import androidx.compose.ui.unit.sp
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import uz.itschool.mychatapp.R
@@ -111,7 +115,10 @@ class LogInActivity : ComponentActivity() {
                                     .padding(30.dp, 30.dp, 0.dp, 10.dp)
                             )
 
-                            Button(onClick = {}, modifier = Modifier
+                            Button(onClick = {
+                                val signInIntent = mGoogleSignInClient.signInIntent
+                                startActivityForResult(signInIntent, 1)
+                            }, modifier = Modifier
                                 .width(300.dp)
                                 .height(45.dp)
                                 .padding(0.dp, 0.dp, 0.dp, 0.dp), colors = ButtonDefaults.buttonColors(containerColor = Color(0XFF771F98))) {
@@ -152,7 +159,31 @@ class LogInActivity : ComponentActivity() {
                         user?.email,
                         user?.photoUrl.toString()
                     )
-                    setUser(userData)
+                    val reference = Firebase.database.reference.child("users")
+                    var b = true
+                    reference.addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val children = snapshot.children
+                            children.forEach {
+                                val user = it.getValue(UserData::class.java)
+                                if (user != null && user.uid == userData.uid) {
+                                    b=false
+                                }
+                            }
+                            if(b){
+                                setUser(userData)
+                            }
+
+                        }
+                        override fun onCancelled(error: DatabaseError) {
+                            Log.d("TAG", "onCancelled: ${error.message}")
+                        }
+
+                    })
+
+                    val i = Intent(this, ContactActivity::class.java)
+                    i.putExtra("uid", userData.uid)
+                    startActivity(i)
 
                 } else {
                     Log.d("TAG", "error: Authentication Failed.")
@@ -164,7 +195,7 @@ class LogInActivity : ComponentActivity() {
         val userIdReference = Firebase.database.reference
             .child("users").child(userData.uid?:"")
         userIdReference.setValue(userData).addOnSuccessListener {
-            val i = Intent(this, ContactActivity::class.java)
+            val i = Intent(this, HomeActivity::class.java)
             i.putExtra("uid", userData.uid)
             startActivity(i)
         }
