@@ -181,7 +181,7 @@ class LogInActivity : ComponentActivity() {
 
                     })
 
-                    val i = Intent(this, ContactActivity::class.java)
+                    val i = Intent(this, HomeActivity::class.java)
                     i.putExtra("uid", userData.uid)
                     startActivity(i)
 

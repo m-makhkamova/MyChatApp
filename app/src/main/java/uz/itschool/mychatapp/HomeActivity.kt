@@ -53,7 +53,7 @@ class HomeActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    SetupBottomNav(navController = navController)
+                    NavGraph(navController = navController)
 
             }
         }
