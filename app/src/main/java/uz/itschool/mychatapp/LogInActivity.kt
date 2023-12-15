@@ -194,6 +194,7 @@ class LogInActivity : ComponentActivity() {
     private fun setUser(userData: UserData) {
         val userIdReference = Firebase.database.reference
             .child("users").child(userData.uid?:"")
+        Log.d("TAG", "${userData.uid}")
         userIdReference.setValue(userData).addOnSuccessListener {
             val i = Intent(this, HomeActivity::class.java)
             i.putExtra("uid", userData.uid)

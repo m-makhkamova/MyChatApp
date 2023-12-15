@@ -2,6 +2,7 @@ package uz.itschool.mychatapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -28,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.auth.FirebaseAuth
 import uz.itschool.mychatapp.LogInActivity
 import uz.itschool.mychatapp.R
 import uz.itschool.mychatapp.ui.theme.MyChatAppTheme
@@ -66,6 +68,7 @@ class SplashActivity : ComponentActivity() {
                             Button(onClick = {
                                 var intent = Intent(this@SplashActivity, LogInActivity::class.java)
                                 startActivity(intent)
+
                             }, modifier = Modifier
                                 .width(300.dp)
                                 .height(45.dp), colors = ButtonDefaults.buttonColors(containerColor = Color(0XFF771F98))) {
@@ -77,6 +80,8 @@ class SplashActivity : ComponentActivity() {
             }
         }
     }
+
+
 }
 
 

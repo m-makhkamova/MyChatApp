@@ -1,4 +1,4 @@
-package uz.itschool.mychatapp
+package uz.itschool.mychatapp.bottomNAV
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
