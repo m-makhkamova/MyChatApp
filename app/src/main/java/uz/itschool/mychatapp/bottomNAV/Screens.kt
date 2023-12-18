@@ -36,19 +36,23 @@ fun NavGraph(navController: NavHostController) {
 }
 
 @Composable
-fun BottomNav(navController: NavController) {
-    BottomNavigation(backgroundColor = colorResource(id = R.color.grey)) {
+fun BottomNav(navController: NavController, selectedIndex:Int, onItemSelected:(Int)->Unit) {
+    BottomNavigation(backgroundColor = colorResource(id = R.color.bottom_Nav)) {
         val items = listOf(
             Screens.Contacts, Screens.Profile
         )
 
         items.forEach {
             BottomNavigationItem(
-                selected = navController.currentDestination?.route == it.route,
-                onClick = {navController.navigate(it.route)},
+                selected = selectedIndex == 0,
+                onClick = {navController.navigate(it.route)
+                          onItemSelected(0)},
                 icon = {Icon(
                     imageVector = it.icon,
-                    contentDescription = "Icon")},
+                    contentDescription = "Icon",
+                    tint = if(selectedIndex == 0) colorResource(id = R.color.main) else colorResource(
+                        id = R.color.black
+                    ))},
                 selectedContentColor = Color(0xFF771F98),
                 unselectedContentColor = Color.Black
             )
