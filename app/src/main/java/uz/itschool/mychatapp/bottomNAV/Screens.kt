@@ -46,7 +46,7 @@ fun BottomNav(navController: NavController, selectedIndex:Int, onItemSelected:(I
             BottomNavigationItem(
                 selected = selectedIndex == 0,
                 onClick = {navController.navigate(it.route)
-                          onItemSelected(0)},
+                          onItemSelected(0) },
                 icon = {Icon(
                     imageVector = it.icon,
                     contentDescription = "Icon",

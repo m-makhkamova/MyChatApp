@@ -82,6 +82,5 @@ dependencies {
 
     implementation ("androidx.compose.material:material:1.4.2")
 
-    implementation("io.coil-kt:coil-compose:1.3.2")
-
+    implementation("io.coil-kt:coil-compose:2.5.0")
 }
