@@ -83,7 +83,9 @@ fun Contacts(navController: NavController){
                 val roundedCornerShape = RoundedCornerShape(15.dp)
                 Row(modifier = Modifier
                     .fillMaxWidth()
-                    .padding(20.dp).border(1.dp, color = Color(0xFF771F98)).background(color = Color.White, shape = roundedCornerShape), verticalAlignment = Alignment.CenterVertically){
+                    .padding(20.dp).border(1.dp, color = Color(0xFF771F98)).background(color = Color.White, shape = roundedCornerShape).clickable {
+                                                                                                                                                  navController.navigate()
+                    }, verticalAlignment = Alignment.CenterVertically){
                       AsyncImage(model = ImageRequest.Builder(LocalContext.current).data(it.photo).crossfade(true).build(),
                                  placeholder = painterResource(id = R.drawable.user),
                                  contentDescription = ("no image"),

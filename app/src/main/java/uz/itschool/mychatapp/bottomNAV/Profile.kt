@@ -1,5 +1,7 @@
 package uz.itschool.mychatapp.bottomNAV
 
+import android.content.Context
+import android.provider.Settings.Global.getString
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -16,6 +18,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,9 +34,15 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import uz.itschool.mychatapp.R
+
+
+
 
 @Composable
 fun Profile(navController: NavController){
@@ -44,6 +53,17 @@ fun Profile(navController: NavController){
     ) {
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
+
+        val LocalContext = compositionLocalOf <Context> { error("No Context provided") }
+        val context = androidx.compose.ui.platform.LocalContext.current
+
+//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//            .requestIdToken(getS)
+//            .requestEmail()
+//            .build()
+//        val mGoogleSignInClient = GoogleSignIn.getClient(context, gso)
+
+
         val roundedCornerShape = RoundedCornerShape(15.dp)
         Row(modifier = Modifier
             .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically){
@@ -61,8 +81,10 @@ fun Profile(navController: NavController){
         }
 
         Row(modifier = Modifier.padding(20.dp)){
-            Icon(painterResource(id = R.drawable.baseline_logout_24), colorResource(id = Color.Red), contentDescription = "Log out", modifier = Modifier.size(20.dp))
-            Text(text = "Log out", color = Color.Red, fontSize = 15.dp, modifier = Modifier.clickable {  })
+            Icon(painter = R.drawable.baseline_logout_24, colorResource(id = R.color.red), contentDescription = "Log out", modifier = Modifier.size(20.dp))
+            Text(text = "Log out", color = Color.Red, fontSize = 15.dp, modifier = Modifier.clickable {
+
+            })
         }
     }
 }
