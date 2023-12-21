@@ -27,6 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,38 +55,43 @@ fun Profile(navController: NavController){
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
-        val LocalContext = compositionLocalOf <Context> { error("No Context provided") }
-        val context = androidx.compose.ui.platform.LocalContext.current
-
-//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestIdToken(getS)
-//            .requestEmail()
-//            .build()
-//        val mGoogleSignInClient = GoogleSignIn.getClient(context, gso)
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(stringResource(id = R.string.client_id))
+            .requestEmail()
+            .build()
+        val mGoogleSignInClient = GoogleSignIn.getClient(LocalContext.current, gso)
 
 
         val roundedCornerShape = RoundedCornerShape(15.dp)
-        Row(modifier = Modifier
-            .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically){
-            AsyncImage(model = ImageRequest.Builder(LocalContext.current).data(currentUser?.photoUrl).crossfade(true).build(),
-                placeholder = painterResource(id = R.drawable.user),
-                contentDescription = ("no image"),
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .size(70.dp))
-            Column{
-                Text(text = currentUser?.displayName?:"", modifier = Modifier.padding(7.dp), fontSize = 25.sp)
-                Text(text = currentUser?.email?:"", modifier = Modifier.padding(5.dp, 0.dp), fontSize = 15.sp)
+        Column {
+            Row(modifier = Modifier
+                .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically){
+                AsyncImage(model = ImageRequest.Builder(LocalContext.current).data(currentUser?.photoUrl).crossfade(true).build(),
+                    placeholder = painterResource(id = R.drawable.user),
+                    contentDescription = ("no image"),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .size(70.dp))
+                Column{
+                    Text(text = currentUser?.displayName?:"", modifier = Modifier.padding(7.dp), fontSize = 25.sp)
+                    Text(text = currentUser?.email?:"", modifier = Modifier.padding(5.dp, 0.dp), fontSize = 15.sp)
+                }
+            }
+
+            Row(modifier = Modifier.padding(20.dp)){
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_logout_24),
+                    contentDescription = "Logout Icon",
+                    modifier = Modifier.size(25.dp),
+                    colorResource(id = R.color.red)
+                )
+                Text(text = "Log out", color = Color.Red, fontSize = 20.sp, modifier = Modifier.clickable {
+                    mGoogleSignInClient.signOut()
+                })
             }
         }
 
-        Row(modifier = Modifier.padding(20.dp)){
-            Icon(painter = R.drawable.baseline_logout_24, colorResource(id = R.color.red), contentDescription = "Log out", modifier = Modifier.size(20.dp))
-            Text(text = "Log out", color = Color.Red, fontSize = 15.dp, modifier = Modifier.clickable {
-
-            })
-        }
     }
 }
 
