@@ -44,6 +44,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import uz.itschool.mychatapp.R
 import uz.itschool.mychatapp.bottomNAV.Profile
+import uz.itschool.mychatapp.bottomNAV.Screens
 import uz.itschool.mychatapp.model.UserData
 import uz.itschool.mychatapp.ui.theme.MyChatAppTheme
 

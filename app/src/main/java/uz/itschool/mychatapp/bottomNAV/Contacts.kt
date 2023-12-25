@@ -51,17 +51,17 @@ import uz.itschool.mychatapp.R
 import uz.itschool.mychatapp.model.UserData
 
 @Composable
-fun Contacts(navController: NavController){
+fun Contacts(navController: NavController, uid:String){
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFFFFFFF))
     ) {
-        val intent = Intent()
-        val uid = intent.getStringExtra("uid")
         val userList = remember {
             mutableStateListOf<UserData>()
         }
+
+        val context = LocalContext.current
 
         val reference = Firebase.database.reference.child("users")
         reference.addValueEventListener(object :ValueEventListener{
@@ -93,10 +93,10 @@ fun Contacts(navController: NavController){
                         .border(1.dp, color = Color(0xFF771F98))
                         .background(color = Color.White, shape = RoundedCornerShape(15.dp))
                         .clickable {
-                            val i = Intent(LocalContext.current, MessageActivity::class.java)
+                            val i = Intent(context, MessageActivity::class.java)
                             i.putExtra("uid", uid)
                             i.putExtra("useruid", it.uid)
-                            startActivity(i)
+                            context.startActivity(i)
                         }, verticalAlignment = Alignment.CenterVertically){
                         Spacer(modifier = Modifier.padding(start = 10.dp))
                         AsyncImage(model = ImageRequest.Builder(LocalContext.current).data(it.photo).crossfade(true).build(),
@@ -114,10 +114,3 @@ fun Contacts(navController: NavController){
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun testContacts(){
-    val navController = rememberNavController()
-    NavGraph(navController = (navController))
-    Contacts(navController = navController)
-}

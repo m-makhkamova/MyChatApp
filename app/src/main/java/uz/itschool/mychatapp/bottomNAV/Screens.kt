@@ -24,10 +24,10 @@ sealed class Screens(val route:String, val icon:ImageVector){
 }
 
 @Composable
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(navController: NavHostController, uid:String) {
     NavHost(navController, startDestination = Screens.Contacts.route) {
         composable(Screens.Contacts.route) {
-            Contacts(navController = navController)
+            Contacts(navController = navController, uid = uid)
         }
         composable(Screens.Profile.route) {
             Profile(navController = navController)

@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import uz.itschool.mychatapp.bottomNAV.BottomNav
+import uz.itschool.mychatapp.bottomNAV.Contacts
 import uz.itschool.mychatapp.bottomNAV.NavGraph
 import uz.itschool.mychatapp.ui.theme.MyChatAppTheme
 
@@ -36,7 +37,9 @@ class HomeActivity : ComponentActivity() {
                         bottomBar = {BottomNav(navController = navController, selectedIndex = selectedIndex.value, onItemSelected = {index -> selectedIndex.value == index})},
                 topBar = { TopAppBar(title = {Text(text = "Chatting App")})}
                     ) {
-                        NavGraph(navController = navController)
+                        var uid = intent.getStringExtra("uid")
+                        NavGraph(navController = navController, uid = uid?:"")
+                        Contacts(navController = navController, uid = uid?:"")
                     }
 
             }

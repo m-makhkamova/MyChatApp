@@ -95,11 +95,4 @@ fun Profile(navController: NavController){
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun testProfile(){
-    val navController = rememberNavController()
-    NavGraph(navController = (navController))
-    Profile(navController = navController)
-}
 
