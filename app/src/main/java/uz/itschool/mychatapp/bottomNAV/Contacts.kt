@@ -60,7 +60,6 @@ fun Contacts(navController: NavController, uid:String){
         val userList = remember {
             mutableStateListOf<UserData>()
         }
-
         val context = LocalContext.current
 
         val reference = Firebase.database.reference.child("users")
@@ -70,7 +69,6 @@ fun Contacts(navController: NavController, uid:String){
                 userList.clear()
                 u.forEach{
                     val userData = it.getValue(UserData::class.java)
-                    userList.clear()
                     if(userData != null && uid != userData.uid){
                         userList.add(userData)
                     }
@@ -81,11 +79,13 @@ fun Contacts(navController: NavController, uid:String){
                 Log.d("TAG", "error: ${error.message}")
             }
         })
-
+        Log.d("TAG", "${userList.size}")
         Column(horizontalAlignment = Alignment.CenterHorizontally){
             Text(text = "Contacts", fontSize = 25.sp, color = Color.Black, modifier = Modifier.padding(0.dp, 70.dp, 0.dp, 0.dp), fontWeight = FontWeight.Bold)
+
             LazyColumn() {
                 items(userList) {
+
                     val roundedCornerShape = RoundedCornerShape(15.dp)
                     Row(modifier = Modifier
                         .fillMaxWidth()

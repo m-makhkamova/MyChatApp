@@ -2,6 +2,7 @@ package uz.itschool.mychatapp.bottomNAV
 
 import android.content.Context
 import android.provider.Settings.Global.getString
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -76,6 +77,7 @@ fun Profile(navController: NavController){
                 Column{
                     Text(text = currentUser?.displayName?:"", modifier = Modifier.padding(7.dp), fontSize = 25.sp)
                     Text(text = currentUser?.email?:"", modifier = Modifier.padding(5.dp, 0.dp), fontSize = 15.sp)
+                    Log.d("TAG", "${currentUser?.displayName}")
                 }
             }
 
