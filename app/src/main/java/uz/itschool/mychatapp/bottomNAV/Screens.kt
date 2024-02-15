@@ -59,7 +59,3 @@ fun BottomNav(navController: NavController, selectedIndex:Int, onItemSelected:(I
         }
     }
 }
-
-
-
-
